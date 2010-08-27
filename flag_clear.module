@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function flag_clear_menu() {
+  $items['flag/reset/%flag/%'] = array(
+    'title' => 'Reset flaggings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('flag_clear_confirm_reset', 2, 3),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer flags'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['flag/remove/%flagging_xxx'] = array(
+    'title' => 'Remove flagging',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('flag_clear_confirm_remove', 2),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer flags'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Menu loader for '%flagging_xxx' arguments.
+ *
+ * @todo: Once Flag has a '%flagging' loader, switch to using it.
+ */
+function flagging_xxx_load($fcid) {
+  $result = db_query('SELECT * FROM {flag_content} WHERE fcid = %d', $fcid);
+  return db_fetch_object($result);
+}
+
+function flag_clear_confirm_reset(&$form_state, $flag, $content_id) {
+  $form['#flag'] = $flag;
+  $form['#flag_content_id'] = $content_id; // @todo: Nate wants to standardize on $form['#whatever']. Is that good?
+
+  $question = t('Are you sure you want to unflag this item on behalf of all users?');
+  $description = t('You are going to unflag item "%content-title" on behalf of @users who flagged it.', array(
+    '@users' => format_plural($flag->get_count($content_id), 'the 1 user', 'all the @count users'),
+    '%content-title' => $flag->get_flag_action($content_id)->content_title,
+  ));
+  $yes = t('Yes'); // The 'unflag_short' label won't always make sense here.
+  $path = isset($_GET['destination']) ? $_GET['destination'] : '<front>';
+
+  return confirm_form($form, $question, $path, $description, $yes);
+}
+
+function flag_clear_confirm_reset_submit($form, &$form_state) {
+  $flag = $form['#flag'];
+  flag_reset_flag($flag, $form['#flag_content_id']);
+  $flag->_update_count($form['#flag_content_id']); // @todo: flag_reset_flag() should do it.
+  drupal_set_message('Item has been unflagged');
+}
+
+function flag_clear_confirm_remove(&$form_state, $flagging) {
+  $form['#flagging'] = $flagging;
+  $flag = flag_get_flag(NULL, $flagging->fid);
+
+  $question = t('Are you sure you want to unflag this item?');
+  $description = t('You are going to unflag item "%content-title" on behalf of user !user.', array(
+    '%content-title' => $flag->get_flag_action($flagging->content_id)->content_title,
+    '!user' => theme('username', user_load($flagging->uid)),
+  ));
+  $yes = t('Yes'); // The 'unflag_short' label won't always make sense here.
+  $path = isset($_GET['destination']) ? $_GET['destination'] : '<front>';
+
+  return confirm_form($form, $question, $path, $description, $yes);
+}
+
+function flag_clear_confirm_remove_submit($form, &$form_state) {
+  $flagging = $form['#flagging'];
+  $flag = flag_get_flag(NULL, $flagging->fid);
+
+  // @todo: We have no way to specify the 'sid', in case of a flagging by an
+  // anonymous user. (Solution: D7's $flag->flag() gets (will get) an additional
+  // $flagging argument, so we should take the $uid/$sid from there, if exist.)
+  if ($flag->flag('unflag', $flagging->content_id, user_load($flagging->uid), TRUE)) {
+    // We can't do $flag->get_label('unflag_message') because it may contain personal
+    // message ("You have ...").
+    drupal_set_message('Item has been unflagged');
+  }
+  else {
+    // We shouldn't arrive here.
+  }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function flag_clear_views_api() {
+  return array(
+    'api' => 2.0,
+  );
+}
+

@@ -1,0 +1,12 @@
+
+After enabling this module you'll find two new pseudo fields in your
+Views admin inteface:
+
+  Flag: Remove link
+
+This removes a single flagging (The "relationship" record).
+
+  Flag: Reset link
+
+This removes all the flagging for this content id. This field sits on
+the "Flag counter" relationship so you'll have to bring it in first.

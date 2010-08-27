@@ -1,0 +1,8 @@
+name = Flag Clear
+description = Provides Views links for resetting and removing flaggings.
+core = 6.x
+package = Flags
+files[] = flag_clear.module
+files[] = flag_clear.views.inc
+files[] = flag_clear.views_links.inc
+dependencies[] = flag
