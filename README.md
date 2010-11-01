@@ -3,7 +3,7 @@ Overview
 
 The [Flag][1] module has one omission: when an item is flagged by
 several users (assuming it's a non-global flag), there's no easy way to
-unclear all these flaggings at once. This module provides a "Reset link"
+clear all these flaggings at once. This module provides a "Reset link"
 field for Views for doing this.
 
 Note: This module does **not** display this link under each node, but
