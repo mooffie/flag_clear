@@ -19,6 +19,16 @@ Requirements
 
 You must use Flag 2.x. This module is not compatible with Flag 1.x.
 
+Downloading
+-----------
+
+You can download this module [here](http://github.com/mooffie/flag_clear/archives/master).
+
+Homepage
+--------
+
+http://drupal.org/project/flag_clear
+
 Usage
 -----
 
@@ -37,9 +47,6 @@ This removes a single flagging (The "relationship" record).
 
 (And see the note above, about Custom Links, for displaying a reset link
 under each node.)
-
-Trivia
-------
 
 [1]: http://drupal.org/project/flag
 [2]: http://drupal.org/project/custom_links
