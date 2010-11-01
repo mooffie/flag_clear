@@ -27,7 +27,7 @@ You can download this module [here](http://github.com/mooffie/flag_clear/archive
 Homepage
 --------
 
-http://drupal.org/project/flag_clear
+[http://drupal.org/project/flag_clear](http://drupal.org/project/flag_clear)
 
 Usage
 -----
