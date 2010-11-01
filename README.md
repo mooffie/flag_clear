@@ -38,7 +38,8 @@ Views admin interface:
   `Flag: Reset link`
 
 This removes all the flaggings for this item. This field sits on the
-"Flag counter" relationship so **you'll have to bring in this counter
+"Flag counter" relationship (because it wants to know whether anybody
+has flagged this item), so **you'll have to bring in this counter
 relationship first**.
 
   `Flag: Remove link`
