@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function flag_clear_menu() {
-  $items['flag/reset/%flag/%'] = array(
+  $items['flag/reset/%flag_xxx/%'] = array(
     'title' => 'Reset flaggings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('flag_clear_confirm_reset', 2, 3),
@@ -21,6 +21,20 @@ function flag_clear_menu() {
     'type' => MENU_CALLBACK,
   );
   return $items;
+}
+
+/**
+ * Menu loader for '%flag_xxx' arguments.
+ *
+ * @todo: Flag's dev already has %flag, but we want to be compatible with older Flag versions, that don't have it.
+ */
+function flag_xxx_load($name) {
+  if (($flag = flag_get_flag($name))) {
+    return $flag;
+  }
+  else {
+    return FALSE;
+  }
 }
 
 /**

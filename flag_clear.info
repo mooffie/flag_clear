@@ -1,4 +1,4 @@
-name = Flag Clear
+name = Flag clear
 description = Provides Views links for resetting and removing flaggings.
 core = 6.x
 package = Flags
