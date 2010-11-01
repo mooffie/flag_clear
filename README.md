@@ -25,18 +25,21 @@ Usage
 After enabling this module you'll find two new pseudo fields in your
 Views admin interface:
 
-  Flag: Remove link
+  `Flag: Reset link`
+
+This removes all the flaggings for this item. This field sits on the
+"Flag counter" relationship so **you'll have to bring in this counter
+relationship first**.
+
+  `Flag: Remove link`
 
 This removes a single flagging (The "relationship" record).
 
-  Flag: Reset link
-
-This removes all the flaggings for this content id. This field sits on
-the "Flag counter" relationship so you'll have to bring in this counter
-relationship first.
-
 (And see the note above, about Custom Links, for displaying a reset link
 under each node.)
+
+Trivia
+------
 
 [1]: http://drupal.org/project/flag
 [2]: http://drupal.org/project/custom_links
