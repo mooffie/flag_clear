@@ -46,6 +46,9 @@ relationship first**.
 
 This removes a single flagging (The "relationship" record).
 
+Users have to have the "administer flags" permission to be able to use
+these links.
+
 (And see the note above, about Custom Links, for displaying a reset link
 under each node.)
 
