@@ -8,10 +8,16 @@ field for Views for doing this.
 
 Note: This module does **not** display this link under each node, but
 you can install the [Custom Links][2] module to achieve this: set your
-link to `flag/reset/bookmarks/[nid]`.
+link to `flag/reset/bookmarks/[nid]` (replace `bookmarks` with the name
+of your flag).
 
 This module also provides a "Remove flagging" link, for Views, for
-clearing a [specific flagging][3].
+clearing [a specific flagging][3].
+
+Requirements
+------------
+
+You must use Flag 2.x. This module is not compatible with Flag 1.x.
 
 Usage
 -----
