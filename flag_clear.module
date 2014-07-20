@@ -65,7 +65,7 @@ function flag_clear_confirm_reset(&$form_state, $flag, $content_id) {
 function flag_clear_confirm_reset_submit($form, &$form_state) {
   $flag = $form['#flag'];
   flag_reset_flag($flag, $form['#flag_content_id']);
-  $flag->_update_count($form['#flag_content_id']); // @todo: flag_reset_flag() should do it.
+  db_query("DELETE FROM {flag_counts} WHERE fid = %d AND content_id = %d", $flag->fid, $form['#flag_content_id']); // @todo: flag_reset_flag() should do it.
   drupal_set_message('Item has been unflagged');
 }
 
